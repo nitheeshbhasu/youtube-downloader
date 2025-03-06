@@ -1,65 +1,45 @@
-/* 🎨 Custom CSS for Streamlit YouTube Downloader */
+/* General Page Styling */
 body {
-    background-color: #121212; /* Dark background */
-    color: #EAEAEA; /* Light text */
-    font-family: 'Arial', sans-serif;
+    background-color: #0e1117;
+    color: #fff;
+    font-family: Arial, sans-serif;
 }
 
+/* Title */
 h1 {
-    color: #FF4500; /* Orange Red */
+    color: #ffcc00;
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 28px;
 }
 
-h2, h3 {
-    color: #FFD700; /* Gold */
-}
-
-.stTextInput>div>div>input, .stSelectbox>div>div {
-    background-color: #333; /* Dark input fields */
-    color: white;
-    border: 2px solid #FF4500;
+/* Info Box */
+.stAlert {
+    background-color: #222831 !important;
+    color: #eeeeee !important;
     border-radius: 10px;
     padding: 10px;
+    font-size: 16px;
 }
 
-.stButton>button {
-    background-color: #FF4500;
-    color: white;
-    font-size: 1.2rem;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    transition: 0.3s;
+/* Input Fields */
+.stTextInput, .stSelectbox, .stButton {
     width: 100%;
+    font-size: 16px;
 }
 
-.stButton>button:hover {
-    background-color: #FFD700;
-    color: black;
-    transform: scale(1.05);
+/* Progress Bar */
+.stProgress {
+    background-color: #007bff;
+    height: 10px;
 }
 
-.stMarkdown {
+/* Sidebar Styling */
+.css-1d391kg {
+    background-color: #1c1e26 !important;
+}
+
+.css-2trqyj {
+    color: #ffcc00;
+    font-size: 20px;
     text-align: center;
-    font-size: 1rem;
-    color: #FFD700;
-}
-
-/* Customize Radio Buttons */
-.stRadio > div {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.stRadio label {
-    color: white;
-    font-weight: bold;
-}
-
-/* Progress Bar Styling */
-.stProgress > div > div > div {
-    background-color: #FF4500 !important;
 }
