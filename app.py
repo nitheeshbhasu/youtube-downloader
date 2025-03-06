@@ -43,6 +43,8 @@ def download_playlist(url, resolution, download_path):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
+    return output_path
+
 
 # 🎨 Streamlit UI
 st.title("🎥 YouTube Playlist Downloader 🚀")
@@ -59,7 +61,7 @@ resolution = st.selectbox(
     index=4
 )
 
-# Show selected resolution (Fix)
+# Show selected resolution
 if resolution:
     st.write(f"✅ Selected Resolution: **{resolution}**")
 
@@ -70,14 +72,20 @@ if device_type == "PC":
 # ✅ Download Button
 if st.button("🚀 Start Download"):
     if playlist_url:
-        final_path = download_path if device_type == "PC" and download_path else tempfile.mkdtemp()
+        final_path = download_path if device_type == "PC" and download_path else tempfile.gettempdir()
         if device_type == "PC" and not os.path.exists(final_path):
             os.makedirs(final_path)
 
         st.write(f"⏳ Downloading in **{resolution}** resolution... Please wait! 🎬")
         try:
-            download_playlist(playlist_url, resolution, final_path)
+            file_path = download_playlist(playlist_url, resolution, final_path)
             st.success(f"✅ Download complete! Check your folder: **{final_path}** 🎉")
+
+            # Provide download button for mobile users
+            if device_type == "Mobile":
+                with open(file_path, "rb") as file:
+                    st.download_button("📥 Download Video", file, file_name="video.mp4")
+
         except Exception as e:
             st.error(f"❌ Error: {e}")
     else:
