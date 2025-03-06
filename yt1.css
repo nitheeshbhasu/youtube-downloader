@@ -1,45 +1,79 @@
-/* General Page Styling */
+/* General app background */
 body {
-    background-color: #0e1117;
-    color: #fff;
-    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Title */
+/* Title Styling */
 h1 {
-    color: #ffcc00;
     text-align: center;
-    font-size: 28px;
+    font-size: 2.5em;
+    color: #ffcc00;
+    margin-bottom: 20px;
 }
 
 /* Info Box */
 .stAlert {
-    background-color: #222831 !important;
-    color: #eeeeee !important;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border-left: 5px solid #ffcc00;
 }
 
-/* Input Fields */
-.stTextInput, .stSelectbox, .stButton {
-    width: 100%;
-    font-size: 16px;
+/* Text Input Fields */
+input[type="text"] {
+    background-color: #2e2e2e;
+    color: white;
+    border: 1px solid #ffcc00;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Select Box */
+.stSelectbox {
+    background-color: #2e2e2e;
+    color: white;
+    border: 1px solid #ffcc00;
+    border-radius: 5px;
+}
+
+/* Radio Buttons */
+.stRadio label {
+    color: white;
+    font-size: 1.2em;
 }
 
 /* Progress Bar */
-.stProgress {
-    background-color: #007bff;
-    height: 10px;
+.stProgress > div > div {
+    background-color: #ffcc00 !important;
 }
 
-/* Sidebar Styling */
-.css-1d391kg {
-    background-color: #1c1e26 !important;
+/* Buttons */
+button {
+    background-color: #ffcc00 !important;
+    color: black !important;
+    font-size: 1.2em !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
 }
 
-.css-2trqyj {
+button:hover {
+    background-color: #ffaa00 !important;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #2e2e2e;
+    color: white;
+}
+
+.stSidebar .stSubheader {
     color: #ffcc00;
-    font-size: 20px;
-    text-align: center;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    visibility: hidden;
 }
