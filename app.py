@@ -3,40 +3,45 @@ import yt_dlp
 import os
 import tempfile
 
+
 # Load custom CSS
 def load_css(file_name):
     with open(file_name, "r", encoding="utf-8") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Load CSS file
-load_css("yt1.css")
+        # Load CSS file
+        load_css("yt1.css")
+
 
 # Get default Downloads folder
 default_download_path = os.path.join(os.path.expanduser("~"), "Downloads")
 
-# Function to format download speed
+
+# Function to format speed
 def format_speed(speed):
     if speed is None:
         return "Unknown"
     elif speed < 1024:
         return f"{speed} B/s"
-    elif speed < 1024**2:
+    elif speed < 1024 ** 2:
         return f"{speed / 1024:.2f} KB/s"
     else:
-        return f"{speed / 1024**2:.2f} MB/s"
+        return f"{speed / 1024 ** 2:.2f} MB/s"
 
-# Function to format file size
+
+# Function to format size
 def format_size(size):
     if size is None:
         return "Unknown"
     elif size < 1024:
         return f"{size} B"
-    elif size < 1024**2:
+    elif size < 1024 ** 2:
         return f"{size / 1024:.2f} KB"
-    elif size < 1024**3:
-        return f"{size / 1024**2:.2f} MB"
+    elif size < 1024 ** 3:
+        return f"{size / 1024 ** 2:.2f} MB"
     else:
-        return f"{size / 1024**3:.2f} GB"
+        return f"{size / 1024 ** 3:.2f} GB"
+
 
 # Function to download playlist with progress tracking
 def download_playlist(url, resolution, download_path):
@@ -46,7 +51,8 @@ def download_playlist(url, resolution, download_path):
             st.session_state.progress_bar.progress(percentage / 100)
             st.session_state.progress_text.text(f"Downloaded: {percentage:.2f}%")
             st.session_state.speed_text.text(f"Speed: {format_speed(d.get('speed', 0))}")
-            st.session_state.size_text.text(f"Size: {format_size(d.get('downloaded_bytes', 0))} / {format_size(d.get('total_bytes', 0))}")
+            st.session_state.size_text.text(
+                f"Size: {format_size(d.get('downloaded_bytes', 0))} / {format_size(d.get('total_bytes', 0))}")
         elif d['status'] == 'finished':
             st.session_state.progress_bar.progress(1)
             st.session_state.progress_text.text("✅ Download complete!")
@@ -73,6 +79,7 @@ def download_playlist(url, resolution, download_path):
 
     return output_path
 
+
 # Streamlit UI
 def main():
     st.title("📺 YouTube Playlist Downloader 🎓")
@@ -83,7 +90,13 @@ def main():
 
     # User inputs
     playlist_url = st.text_input("🔗 Enter YouTube Playlist URL:")
-    resolution = st.selectbox("🎥 Select Resolution:", ["360p", "480p", "720p", "1080p"], index=2)
+
+    # Updated resolution list
+    resolution = st.selectbox(
+        "🎥 Select Resolution:",
+        ["144p", "240p", "360p", "480p", "720p", "1080p", "1440p", "2160p (4K)"],
+        index=5
+    )
 
     # Select Download Path
     download_path = ""
@@ -132,6 +145,7 @@ def main():
         "4. No Liability: Use at your own risk.\n"
         "5. Terms of Service: Comply with the terms of any platform you download from."
     )
+
 
 if __name__ == "__main__":
     main()
