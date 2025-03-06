@@ -9,7 +9,7 @@ def load_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Load CSS file
-load_css("styles.css")
+load_css("yt1.css")
 
 # Get default Downloads folder
 default_download_path = os.path.join(os.path.expanduser("~"), "Downloads")
