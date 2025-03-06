@@ -4,7 +4,6 @@ import os
 import tempfile
 
 
-
 # Load custom CSS
 def load_css(file_name):
     with open(file_name, "r", encoding="utf-8") as f:
@@ -16,7 +15,6 @@ def load_css(file_name):
 
 # Get default Downloads folder
 default_download_path = os.path.join(os.path.expanduser("~"), "Downloads")
-
 
 # Function to format speed
 def format_speed(speed):
@@ -51,7 +49,8 @@ def download_playlist(url, resolution, download_path):
             st.session_state.progress_text.text(f"Downloaded: {percentage:.2f}%")
             st.session_state.speed_text.text(f"Speed: {format_speed(d.get('speed', 0))}")
             st.session_state.size_text.text(
-                f"Size: {format_size(d.get('downloaded_bytes', 0))} / {format_size(d.get('total_bytes', 0))}")
+                f"Size: {format_size(d.get('downloaded_bytes', 0))} / {format_size(d.get('total_bytes', 0))}"
+            )
         elif d['status'] == 'finished':
             st.session_state.progress_bar.progress(1)
             st.session_state.progress_text.text("✅ Download complete!")
@@ -63,7 +62,7 @@ def download_playlist(url, resolution, download_path):
     # Set output template
     output_path = os.path.join(download_path, "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s")
 
-    # Updated format options to bypass restrictions
+    # Updated yt-dlp options with FFmpeg path
     ydl_opts = {
         "format": f"bv*[height<={resolution.rstrip('p')}]+ba/best",
         "merge_output_format": "mp4",
@@ -71,10 +70,13 @@ def download_playlist(url, resolution, download_path):
         "noplaylist": False,
         "retries": 10,
         "progress_hooks": [progress_hook],
-        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
-        "cookies-from-browser": "chrome",  # Bypass authentication issues
-        "force_generic_extractor": True,  # Fix some 403 errors
-        # "proxy": "http://your-proxy-address:port"  # Uncomment & replace if needed
+        "postprocessors": [
+            {
+                "key": "FFmpegVideoConvertor",
+                "preferedformat": "mp4"
+            }
+        ],
+        "ffmpeg_location": "/usr/bin/ffmpeg",  # Ensure yt-dlp knows where FFmpeg is
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
