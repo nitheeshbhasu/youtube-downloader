@@ -4,6 +4,7 @@ import os
 import tempfile
 
 
+
 # Load custom CSS
 def load_css(file_name):
     with open(file_name, "r", encoding="utf-8") as f:
@@ -28,7 +29,6 @@ def format_speed(speed):
     else:
         return f"{speed / 1024 ** 2:.2f} MB/s"
 
-
 # Function to format size
 def format_size(size):
     if size is None:
@@ -41,7 +41,6 @@ def format_size(size):
         return f"{size / 1024 ** 2:.2f} MB"
     else:
         return f"{size / 1024 ** 3:.2f} GB"
-
 
 # Function to download playlist with progress tracking
 def download_playlist(url, resolution, download_path):
@@ -64,21 +63,24 @@ def download_playlist(url, resolution, download_path):
     # Set output template
     output_path = os.path.join(download_path, "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s")
 
+    # Updated format options to bypass restrictions
     ydl_opts = {
-        "format": f"bv*[height={resolution.rstrip('p')}]+ba/best",
+        "format": f"bv*[height<={resolution.rstrip('p')}]+ba/best",
         "merge_output_format": "mp4",
         "outtmpl": output_path,
         "noplaylist": False,
         "retries": 10,
         "progress_hooks": [progress_hook],
         "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
+        "cookies-from-browser": "chrome",  # Bypass authentication issues
+        "force_generic_extractor": True,  # Fix some 403 errors
+        # "proxy": "http://your-proxy-address:port"  # Uncomment & replace if needed
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
     return output_path
-
 
 # Streamlit UI
 def main():
@@ -101,6 +103,7 @@ def main():
     # Select Download Path
     download_path = ""
     if device_type == "PC":
+        default_download_path = os.path.join(os.path.expanduser("~"), "Downloads")
         download_path = st.text_input("📂 Enter Download Folder Path:", default_download_path)
 
     # Initialize progress tracking
@@ -145,7 +148,6 @@ def main():
         "4. No Liability: Use at your own risk.\n"
         "5. Terms of Service: Comply with the terms of any platform you download from."
     )
-
 
 if __name__ == "__main__":
     main()
